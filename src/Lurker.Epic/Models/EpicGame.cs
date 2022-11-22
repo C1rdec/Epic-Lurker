@@ -62,9 +62,7 @@ namespace Lurker.Epic.Models
         public override Task Open()
             => CliWrap.Cli.Wrap(_epicExe).WithArguments(_informations.GetArguments()).ExecuteAsync();
 
-
-
-        public static string FirstCharToUpper(string input) =>
+        private static string FirstCharToUpper(string input) =>
             input switch
             {
                 null => throw new ArgumentNullException(nameof(input)),
