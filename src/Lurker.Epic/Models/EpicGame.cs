@@ -40,6 +40,8 @@ namespace Lurker.Epic.Models
 
         public override LauncherType Launcher => LauncherType.Epic;
 
+        public override string Id => _informations.GetId();
+
         #endregion
 
         #region Methods
