@@ -29,6 +29,11 @@ namespace Lurker.Epic.Services
 
             foreach (var folder in Directory.GetDirectories(installationFolder))
             {
+                if (!Directory.Exists(Path.Combine(folder, ".egstore")))
+                {
+                    continue;
+                }
+
                 var epicGame = new EpicGame(folder, ExecutablePath);
                 epicGame.Initialize();
 
