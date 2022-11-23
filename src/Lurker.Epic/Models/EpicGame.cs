@@ -50,15 +50,7 @@ namespace Lurker.Epic.Models
         {
             _informations = System.Text.Json.JsonSerializer.Deserialize<CatalogInformations>(File.ReadAllText(_mancpnFilepath));
 
-            var exeFiles = new DirectoryInfo(_installationFolder).GetFiles($"*.exe", SearchOption.AllDirectories);
-            var matches = exeFiles.Select(e => new
-            {
-                FilePath = e.FullName,
-                Ratio = Fuzz.Ratio(e.Name.Replace(".exe", string.Empty).ToLower(), Name.ToLower())
-            });
-
-            var bestmatch = matches.MaxBy(r => r.Ratio);
-            ExeFilePath = bestmatch.FilePath;
+            SetExeFile(_installationFolder);
         }
 
         public override Task Open()
