@@ -15,12 +15,11 @@ namespace Lurker.Epic.Services
 
         public override List<EpicGame> FindGames()
         {
+            var games = new List<EpicGame>();
             if (string.IsNullOrEmpty(ExecutablePath))
             {
-                throw new InvalidOperationException("Must be initialize");
+                return games;
             }
-
-            var games = new List<EpicGame>();
 
             var localAppdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var configurationFile = Path.Combine(localAppdata, "EpicGamesLauncher\\Saved\\Config\\Windows\\GameUserSettings.ini");
