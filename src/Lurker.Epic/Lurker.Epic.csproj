@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lurker.Common" Version="1.0.5" />
+    <PackageReference Include="Lurker.Common" Version="1.1.0" />
   </ItemGroup>
 
 </Project>
