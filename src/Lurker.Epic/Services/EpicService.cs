@@ -11,7 +11,7 @@ namespace Lurker.Epic.Services
     {
         protected override string ProcessName => "EpicGamesLauncher";
 
-        protected override string OpenLink => @"epic.lurker\OpenEpicLink.url";
+        protected override string OpenUrl => "com.epicgames.launcher://open";
 
         public override List<EpicGame> FindGames()
         {
