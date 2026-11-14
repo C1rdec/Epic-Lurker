@@ -9,6 +9,12 @@ namespace Lurker.Epic.Services;
 
 public class EpicService : ServiceBase<EpicGame>
 {
+    private readonly List<string> GameUserSettingsLocations =
+    [
+        "EpicGamesLauncher\\Saved\\Config\\Windows\\GameUserSettings.ini",
+        "EpicGamesLauncher\\Saved\\Config\\WindowsEditor\\GameUserSettings.ini"
+    ];
+
     protected override string ProcessName => "EpicGamesLauncher";
 
     protected override string OpenUrl => "com.epicgames.launcher://open";
@@ -21,8 +27,24 @@ public class EpicService : ServiceBase<EpicGame>
             return games;
         }
 
-        var localAppdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        var configurationFile = Path.Combine(localAppdata, "EpicGamesLauncher\\Saved\\Config\\Windows\\GameUserSettings.ini");
+        string configurationFile = null;
+        foreach (var location in GameUserSettingsLocations)
+        {
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), location);
+            if (!File.Exists(path))
+            {
+                continue;
+            }
+
+            configurationFile = path;
+            break;
+        }
+
+        if (configurationFile == null)
+        {
+            throw new FileNotFoundException("Could not find Epic Games configuration file");
+        }
+
         var text = File.ReadAllText(configurationFile);
         var installationFolder = text.GetLineAfter("DefaultAppInstallLocation=");
 
