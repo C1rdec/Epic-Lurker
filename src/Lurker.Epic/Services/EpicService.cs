@@ -27,19 +27,7 @@ public class EpicService : ServiceBase<EpicGame>
             return games;
         }
 
-        string configurationFile = null;
-        foreach (var location in GameUserSettingsLocations)
-        {
-            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), location);
-            if (!File.Exists(path))
-            {
-                continue;
-            }
-
-            configurationFile = path;
-            break;
-        }
-
+        var configurationFile = GetConfigurationFilePath();
         if (configurationFile == null)
         {
             throw new FileNotFoundException("Could not find Epic Games configuration file");
@@ -67,5 +55,21 @@ public class EpicService : ServiceBase<EpicGame>
         }
 
         return games;
+    }
+
+    private string GetConfigurationFilePath()
+    {
+        foreach (var location in GameUserSettingsLocations)
+        {
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), location);
+            if (!File.Exists(path))
+            {
+                continue;
+            }
+
+            return path;
+        }
+
+        return null;
     }
 }
